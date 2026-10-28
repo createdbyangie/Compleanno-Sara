@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Compleanno Sara ✨ 18th</title>
     <style>
         :root {
@@ -20,64 +20,85 @@
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            max-width: 500px;
+            margin: 0 auto;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 900px;
-            padding: 20px;
-            box-sizing: border-box;
-            flex: 1;
+            background-color: var(--bg-color);
+            box-shadow: 0 0 20px rgba(180, 140, 140, 0.1);
         }
 
         header {
+            padding: 24px 20px 16px 20px;
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
         h1 {
             color: var(--primary-dark);
-            font-size: 26px;
+            font-size: 22px;
             margin: 0;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
-        .actions-bar {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
+        .admin-trigger {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            padding: 6px 10px;
+            border-radius: 8px;
+            background-color: #FAF6F5;
         }
 
-        .btn {
+        .upload-container {
+            width: 100%;
+        }
+
+        .upload-btn {
             background-color: var(--primary);
             color: #FFFFFF;
-            padding: 12px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            fontWeight: 600;
+            width: 100%;
+            padding: 16px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
             border: none;
-            font-size: 14px;
-            box-shadow: 0 4px 12px rgba(197, 155, 147, 0.3);
-            transition: background 0.2s;
-            text-decoration: none;
-            display: inline-flex;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(197, 155, 147, 0.35);
+            display: flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            transition: transform 0.1s ease, background-color 0.2s;
+            box-sizing: border-box;
         }
 
-        .btn:hover {
+        .upload-btn:active {
+            transform: scale(0.98);
+        }
+
+        .upload-btn:hover {
             background-color: var(--primary-dark);
         }
 
@@ -85,47 +106,59 @@
             display: none;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            width: 100%;
+        .feed {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            flex: 1;
         }
 
         .photo-card {
             background: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 6px 20px rgba(180, 140, 140, 0.1);
+            box-shadow: 0 8px 25px rgba(180, 140, 140, 0.12);
             border: 1px solid var(--border-color);
-            aspect-ratio: 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
         }
 
         .photo-card img {
             width: 100%;
-            height: 100%;
+            max-height: 450px;
             object-fit: cover;
+            display: block;
+        }
+
+        .photo-footer {
+            padding: 12px 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
         }
 
         .empty-state {
-            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 60px;
+            padding: 0 20px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .loading-state {
             text-align: center;
             color: var(--text-muted);
             margin-top: 40px;
-            font-size: 16px;
-        }
-
-        .loading-text {
-            text-align: center;
-            color: var(--text-muted);
-            margin-top: 20px;
             font-style: italic;
+            font-size: 14px;
         }
 
-        /* Modale PIN per la Festeggiata */
+        /* Modale PIN */
         #admin-modal {
             display: none;
             position: fixed;
@@ -133,7 +166,8 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(74, 59, 50, 0.5);
+            background: rgba(74, 59, 50, 0.6);
+            backdrop-filter: blur(4px);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -141,73 +175,114 @@
 
         .modal-card {
             background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 28px;
+            border-radius: 24px;
+            width: 85%;
+            max-width: 320px;
             text-align: center;
-            max-width: 350px;
-            width: 90%;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border: 1px solid var(--border-color);
+        }
+
+        .modal-card h3 {
+            color: var(--primary-dark);
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        .modal-card p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 20px;
         }
 
         .modal-card input {
             width: 100%;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 14px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            font-size: 16px;
+            font-size: 20px;
             text-align: center;
-            margin: 15px 0;
+            letter-spacing: 4px;
             outline: none;
-            box-sizing: border-box;
             background: #FAF6F5;
             color: var(--text-main);
+            box-sizing: border-box;
+            margin-bottom: 16px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background: #F1E5E1;
+            color: var(--text-muted);
+        }
+
+        .btn-confirm {
+            background: var(--primary);
+            color: white;
         }
 
         .error-msg {
             color: #D97777;
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            margin-bottom: 12px;
             display: none;
         }
     </style>
-    <!-- Libreria per scaricare lo ZIP delle foto -->
+    <!-- Libreria ZIP per Sara -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 
-    <div class="container">
+    <div class="app-container">
         <header>
-            <h1>Compleanno Sara 🥂 18th</h1>
-            <div class="actions-bar">
-                <label class="btn" id="upload-btn-label">
-                    📷 Carica Foto
-                    <input type="file" id="file-input" accept="image/*" onchange="uploadPhoto(event)">
+            <div class="header-top">
+                <h1>Compleanno Sara 🥂 18th</h1>
+                <button class="admin-trigger" onclick="openAdminModal()">🔒 Area Sara</button>
+            </div>
+            <div class="upload-container">
+                <label class="upload-btn" id="upload-btn-label">
+                    📷 Scatta o Carica Foto
+                    <input type="file" id="file-input" accept="image/*" onchange="compressAndUpload(event)">
                 </label>
-                <!-- Pulsante Riservato alla Festeggiata -->
-                <button class="btn" style="background-color: #9E7B70;" onclick="openAdminModal()">🔒 Area Sara</button>
             </div>
         </header>
 
-        <div id="loading" class="loading-text">Caricamento ricordi in corso...</div>
-        <div class="grid" id="photo-grid"></div>
+        <div class="feed" id="photo-feed">
+            <div id="loading" class="loading-state">Caricamento ricordi... ✨</div>
+        </div>
     </div>
 
-    <!-- MODALE INSERIMENTO PIN -->
+    <!-- MODALE PIN SEGRETO -->
     <div id="admin-modal">
         <div class="modal-card">
-            <h3 style="color: var(--primary-dark); margin-top:0;">Area Festeggiata</h3>
-            <p style="color: var(--text-muted); font-size: 13px;">Inserisci il PIN per scaricare tutte le foto in formato ZIP</p>
-            <input type="password" id="admin-pin" maxlength="4" placeholder="PIN (es. 1818)">
-            <div id="pin-error" class="error-msg">PIN errato!</div>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn" style="flex:1; background-color: #D97777;" onclick="closeAdminModal()">Annulla</button>
-                <button class="btn" style="flex:1;" onclick="verifyAdminPin()">Conferma</button>
+            <h3>Area Festeggiata</h3>
+            <p>Inserisci il PIN per scaricare l'archivio ZIP con tutte le foto</p>
+            <input type="password" id="admin-pin" maxlength="4" placeholder="••••">
+            <div id="pin-error" class="error-msg">PIN non corretto</div>
+            <div class="modal-actions">
+                <button class="modal-btn btn-cancel" onclick="closeAdminModal()">Chiudi</button>
+                <button class="modal-btn btn-confirm" onclick="verifyAdminPin()">Entra</button>
             </div>
         </div>
     </div>
 
-    <!-- FIREBASE & LOGICA -->
+    <!-- FIREBASE E LOGICA SMART -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
@@ -227,20 +302,19 @@
         const CORRECT_PIN = "1818";
         let cachedPhotos = [];
 
-        // Caricamento foto automatico all'apertura per TUTTI gli invitati
+        // Caricamento feed foto in tempo reale per tutti
         window.loadPhotos = async function() {
-            const grid = document.getElementById("photo-grid");
+            const feed = document.getElementById("photo-feed");
             const loading = document.getElementById("loading");
             try {
                 const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 
-                grid.innerHTML = "";
-                loading.style.display = "none";
+                feed.innerHTML = "";
                 cachedPhotos = [];
 
                 if (querySnapshot.empty) {
-                    grid.innerHTML = '<div class="empty-state">Nessuna foto caricata ancora. Sii la prima/o a rompere il ghiaccio! 💖</div>';
+                    feed.innerHTML = '<div class="empty-state">Ancora nessuna foto! Rompi il ghiaccio e carica il primo ricordo della festa 💖</div>';
                     return;
                 }
 
@@ -249,42 +323,79 @@
                     cachedPhotos.push(data.imageUrl);
                     const card = document.createElement("div");
                     card.className = "photo-card";
-                    card.innerHTML = `<img src="${data.imageUrl}" alt="Ricordo festa">`;
-                    grid.appendChild(card);
+                    card.innerHTML = `
+                        <img src="${data.imageUrl}" alt="Foto festa" loading="lazy">
+                        <div class="photo-footer">
+                            <span>✨ Ricordo di gruppo</span>
+                            <span>${new Date().toLocaleDateString()}</span>
+                        </div>
+                    `;
+                    feed.appendChild(card);
                 });
             } catch (err) {
-                console.error("Errore nel caricamento:", err);
-                loading.innerText = "Impossibile caricare le foto. Controlla la connessione.";
+                console.error("Errore caricamento:", err);
+                if(loading) loading.innerText = "Impossibile caricare le foto. Controlla la connessione.";
             }
         };
 
-        // Funzione upload foto ottimizzata per evitare errori di invio
-        window.uploadPhoto = async function(event) {
+        // Funzione magica: comprime l'immagine prima di caricarla per azzerare il peso ed evitare errori
+        window.compressAndUpload = function(event) {
             const file = event.target.files[0];
             if (!file) return;
 
             const uploadLabel = document.getElementById("upload-btn-label");
-            uploadLabel.innerText = "Caricamento in corso...";
+            uploadLabel.innerText = "Ottimizzazione foto...";
 
             const reader = new FileReader();
-            reader.onloadend = async function() {
-                try {
-                    await addDoc(collection(db, "photos"), {
-                        imageUrl: reader.result,
-                        createdAt: new Date()
-                    });
-                    loadPhotos();
-                } catch (err) {
-                    console.error("Errore salvataggio:", err);
-                    alert("Caricamento non riuscito. La foto potrebbe essere troppo pesante, prova con un'altra.");
-                } finally {
-                    uploadLabel.innerHTML = `📷 Carica Foto <input type='file' id='file-input' accept='image/*' onchange='uploadPhoto(event)'>`;
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                const img = new Image();
+                img.src = e.target.result;
+                img.onload = async function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1000;
+                    const MAX_HEIGHT = 1000;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    // Comprime al 75% di qualità per renderla leggerissima ma bellissima
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+                    uploadLabel.innerText = "Caricamento in corso...";
+                    try {
+                        await addDoc(collection(db, "photos"), {
+                            imageUrl: compressedDataUrl,
+                            createdAt: new Date()
+                        });
+                        loadPhotos();
+                    } catch (err) {
+                        console.error("Errore salvataggio:", err);
+                        alert("Caricamento non riuscito. Riprova.");
+                    } finally {
+                        uploadLabel.innerHTML = `📷 Scatta o Carica Foto <input type='file' id='file-input' accept='image/*' onchange='compressAndUpload(event)'>`;
+                    }
                 }
             };
-            reader.readAsDataURL(file);
         };
 
-        // Gestione PIN Festeggiata
+        // Gestione PIN Sara
         window.openAdminModal = function() {
             document.getElementById("admin-modal").style.display = "flex";
             document.getElementById("admin-pin").value = "";
@@ -299,38 +410,36 @@
             const enteredPin = document.getElementById("admin-pin").value;
             if (enteredPin === CORRECT_PIN) {
                 closeAdminModal();
-                alert("PIN corretto! Preparazione dell'archivio ZIP con tutte le foto in corso...");
+                alert("PIN corretto! Preparazione dell'archivio ZIP...");
                 await downloadAllAsZip();
             } else {
                 document.getElementById("pin-error").style.display = "block";
             }
         };
 
-        // Download ZIP per Sara
+        // Download archivio ZIP
         async function downloadAllAsZip() {
             if (cachedPhotos.length === 0) {
-                alert("Non ci sono foto da scaricare al momento!");
+                alert("Non ci sono foto da scaricare!");
                 return;
             }
             const zip = new JSZip();
             const folder = zip.folder("Compleanno-Sara-Ricordi");
 
             cachedPhotos.forEach((url, index) => {
-                // Estrae i dati binari dall'immagine in base64
                 const base64Data = url.split(',')[1];
                 if (base64Data) {
-                    folder.file(`foto_${index + 1}.jpg`, base64Data, { base64: true });
+                    folder.file(`Sara_18_${index + 1}.jpg`, base64Data, { base64: true });
                 }
             });
 
             const content = await zip.generateAsync({ type: "blob" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(content);
-            link.download = "Compleanno-Sara-Foto.zip";
+            link.download = "Compleanno-Sara-Tutte-Le-Foto.zip";
             link.click();
         }
 
-        // Avvia il caricamento galleria all'avvio
         loadPhotos();
     </script>
 </body>
