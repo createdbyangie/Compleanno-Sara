@@ -3,44 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Compleanno Sara ✨ 18th</title>
+    <title>Festa di Sara 🥂 18° COMPLEANNO</title>
     <style>
         :root {
-            --bg-color: #F9F3F0;
+            --bg-color: #FAF4F2;
             --card-bg: #FFFFFF;
-            --primary: #C59B93;
-            --primary-dark: #A87D75;
-            --text-main: #4A3B32;
-            --text-muted: #9E7B70;
-            --border-color: #EED7D3;
+            --primary: #E89BA7;
+            --primary-dark: #D47B89;
+            --text-main: #3D2C2E;
+            --text-muted: #8F7679;
+            --border-color: #F0DCDC;
+            --accent-soft: #FFE6E9;
         }
+
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
 
         body {
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
             color: var(--text-main);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
         }
 
         .app-container {
-            max-width: 500px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 480px;
             min-height: 100vh;
+            background-color: var(--bg-color);
             display: flex;
             flex-direction: column;
-            background-color: var(--bg-color);
-            box-shadow: 0 0 20px rgba(180, 140, 140, 0.1);
+            position: relative;
+            box-shadow: 0 0 25px rgba(0,0,0,0.05);
+            padding-bottom: 90px;
         }
 
+        /* HEADER */
         header {
-            padding: 24px 20px 16px 20px;
+            padding: 18px 20px 12px;
             background: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
             position: sticky;
             top: 0;
             z-index: 10;
@@ -50,242 +54,479 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 12px;
         }
 
-        h1 {
-            color: var(--primary-dark);
+        .title-area h1 {
             font-size: 22px;
             margin: 0;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            color: var(--primary-dark);
+            font-weight: 800;
         }
 
-        .admin-trigger {
-            background: none;
-            border: none;
-            color: var(--text-muted);
+        .title-area span {
             font-size: 13px;
-            cursor: pointer;
-            padding: 6px 10px;
-            border-radius: 8px;
-            background-color: #FAF6F5;
-        }
-
-        .upload-container {
-            width: 100%;
-        }
-
-        .upload-btn {
-            background-color: var(--primary);
-            color: #FFFFFF;
-            width: 100%;
-            padding: 16px;
-            border-radius: 16px;
-            font-size: 16px;
+            color: var(--text-muted);
             font-weight: 600;
-            border: none;
+            letter-spacing: 0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .badge-btn {
+            background: var(--accent-soft);
+            color: var(--primary-dark);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(197, 155, 147, 0.35);
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 4px;
+        }
+
+        /* FILTRI TOP */
+        .filter-bar {
+            display: flex;
             gap: 8px;
-            transition: transform 0.1s ease, background-color 0.2s;
-            box-sizing: border-box;
+            margin-top: 10px;
         }
 
-        .upload-btn:active {
-            transform: scale(0.98);
+        .filter-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
         }
 
-        .upload-btn:hover {
-            background-color: var(--primary-dark);
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
+        /* FEED */
         .feed {
             padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            flex: 1;
+            gap: 20px;
         }
 
-        .photo-card {
+        .post-card {
             background: var(--card-bg);
             border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(180, 140, 140, 0.12);
             border: 1px solid var(--border-color);
+            box-shadow: 0 6px 18px rgba(212, 123, 137, 0.08);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
-        .photo-card img {
+        .post-header {
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .user-details .username {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .user-details .time {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .post-actions-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .post-image {
             width: 100%;
-            max-height: 450px;
+            max-height: 480px;
             object-fit: cover;
             display: block;
         }
 
-        .photo-footer {
-            padding: 12px 16px;
-            font-size: 12px;
-            color: var(--text-muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card-bg);
-        }
-
-        .empty-state {
-            text-align: center;
-            color: var(--text-muted);
-            margin-top: 60px;
-            padding: 0 20px;
+        .post-caption {
+            padding: 14px 16px;
             font-size: 15px;
+            line-height: 1.4;
+            color: var(--text-main);
+        }
+
+        .post-dedication-only {
+            padding: 24px 20px;
+            font-size: 17px;
             line-height: 1.5;
-        }
-
-        .loading-state {
-            text-align: center;
-            color: var(--text-muted);
-            margin-top: 40px;
+            color: var(--text-main);
+            background: var(--accent-soft);
+            border-radius: 14px;
+            margin: 12px 16px 16px;
+            font-weight: 500;
             font-style: italic;
-            font-size: 14px;
         }
 
-        /* Modale PIN */
-        #admin-modal {
+        /* BARRA BOTTOM */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 480px;
+            height: 70px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 20;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .nav-item.active {
+            color: var(--primary-dark);
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        /* FAB PULSANTI AZIONE */
+        .fab-group {
+            position: fixed;
+            bottom: 85px;
+            right: 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            z-index: 25;
+        }
+
+        .fab-small {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--primary);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .fab-main {
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 18px rgba(212, 123, 137, 0.4);
+            transition: transform 0.15s ease;
+        }
+
+        .fab-main:active { transform: scale(0.92); }
+
+        /* MODALI */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(74, 59, 50, 0.6);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(4px);
+            z-index: 100;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
         }
 
-        .modal-card {
+        .modal-content {
             background: var(--card-bg);
-            padding: 28px;
+            width: 90%;
+            max-width: 400px;
             border-radius: 24px;
-            width: 85%;
-            max-width: 320px;
-            text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            padding: 24px;
+            max-height: 90vh;
+            overflow-y: auto;
             border: 1px solid var(--border-color);
         }
 
-        .modal-card h3 {
+        .modal-title {
+            font-size: 20px;
+            font-weight: 800;
             color: var(--primary-dark);
             margin-top: 0;
-            margin-bottom: 8px;
-            font-size: 20px;
+            margin-bottom: 12px;
         }
 
-        .modal-card p {
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 20px;
-        }
-
-        .modal-card input {
+        .modal-input {
             width: 100%;
             padding: 14px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            font-size: 20px;
-            text-align: center;
-            letter-spacing: 4px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            background: var(--bg-color);
             outline: none;
-            background: #FAF6F5;
-            color: var(--text-main);
-            box-sizing: border-box;
-            margin-bottom: 16px;
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 10px;
+        .preview-img-box {
+            width: 100%;
+            max-height: 250px;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 12px;
         }
 
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
+        .preview-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .char-counter {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: right;
+            margin-bottom: 12px;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 14px;
+            border-radius: 14px;
             border: none;
-            font-weight: 600;
-            font-size: 14px;
+            background: var(--primary);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
+            margin-top: 8px;
         }
 
         .btn-cancel {
-            background: #F1E5E1;
+            background: #F0E6E8;
             color: var(--text-muted);
         }
 
-        .btn-confirm {
-            background: var(--primary);
-            color: white;
+        /* SARA ADMIN GRID */
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 15px;
         }
 
-        .error-msg {
-            color: #D97777;
-            font-size: 12px;
-            margin-bottom: 12px;
-            display: none;
+        .admin-grid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
         }
+
+        input[type="file"] { display: none; }
     </style>
-    <!-- Libreria ZIP per Sara -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
 
     <div class="app-container">
+        <!-- HEADER -->
         <header>
             <div class="header-top">
-                <h1>Compleanno Sara 🥂 18th</h1>
-                <button class="admin-trigger" onclick="openAdminModal()">🔒 Area Sara</button>
+                <div class="title-area">
+                    <h1>Festa di Sara 💕</h1>
+                    <span>18° COMPLEANNO</span>
+                </div>
+                <div class="header-actions">
+                    <button class="badge-btn" onclick="openMyPostsModal()">👤 I Miei Post</button>
+                    <button class="badge-btn" onclick="openSaraModal()">👑 SARA</button>
+                </div>
             </div>
-            <div class="upload-container">
-                <label class="upload-btn" id="upload-btn-label">
-                    📷 Scatta o Carica Foto
-                    <input type="file" id="file-input" accept="image/*" onchange="compressAndUpload(event)">
-                </label>
+            
+            <!-- FILTRI SUPP. -->
+            <div class="filter-bar">
+                <button class="filter-btn active" id="f-all" onclick="setFilter('all')">✨ Tutte</button>
+                <button class="filter-btn" id="f-photos" onclick="setFilter('photos')">📷 Foto</button>
+                <button class="filter-btn" id="f-dedications" onclick="setFilter('dedications')">💌 Dediche</button>
             </div>
         </header>
 
-        <div class="feed" id="photo-feed">
-            <div id="loading" class="loading-state">Caricamento ricordi... ✨</div>
+        <!-- FEED PRINCIPALE -->
+        <div class="feed" id="main-feed">
+            <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">Caricamento bacheca... ✨</div>
+        </div>
+
+        <!-- FAB BOTTONI D'AZIONE -->
+        <div class="fab-group">
+            <label class="fab-small" id="gallery-label" title="Carica da galleria">
+                📁
+                <input type="file" id="gallery-input" accept="image/*" onchange="handleImageSelect(event)">
+            </label>
+
+            <label class="fab-main" id="camera-label" title="Scatta foto">
+                📷
+                <input type="file" id="camera-input" accept="image/*" capture="environment" onchange="handleImageSelect(event)">
+            </label>
+
+            <button class="fab-main" id="dedication-fab" style="display: none;" onclick="openDedicationModal()">
+                ✏️
+            </button>
+        </div>
+
+        <!-- BOTTOM NAV -->
+        <div class="bottom-nav">
+            <button class="nav-item active" id="nav-foto" onclick="switchTab('foto')">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm0 4v10h16V8H4zm5 3l2.5 3.01L14.5 11l4.5 6H5l4-5z"/></svg>
+                Foto
+            </button>
+            <button class="nav-item" id="nav-dediche" onclick="switchTab('dediche')">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                Dediche
+            </button>
         </div>
     </div>
 
-    <!-- MODALE PIN SEGRETO -->
-    <div id="admin-modal">
-        <div class="modal-card">
-            <h3>Area Festeggiata</h3>
-            <p>Inserisci il PIN per scaricare l'archivio ZIP con tutte le foto</p>
-            <input type="password" id="admin-pin" maxlength="4" placeholder="••••">
-            <div id="pin-error" class="error-msg">PIN non corretto</div>
-            <div class="modal-actions">
-                <button class="modal-btn btn-cancel" onclick="closeAdminModal()">Chiudi</button>
-                <button class="modal-btn btn-confirm" onclick="verifyAdminPin()">Entra</button>
+    <!-- MODALE REGISTRAZIONE NOME -->
+    <div class="modal" id="name-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Come ti chiami? ✨</h3>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px;">Inserisci il tuo nome per firmare le tue foto e le tue dediche per Sara.</p>
+            <input type="text" id="user-name-input" class="modal-input" placeholder="Il tuo nome (es. Chiara)">
+            <button class="btn-action" onclick="saveUserName()">Salva e Continua</button>
+        </div>
+    </div>
+
+    <!-- MODALE ANTEPRIMA PUBBLICAZIONE FOTO -->
+    <div class="modal" id="publish-photo-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Pubblica Foto 📷</h3>
+            <div class="preview-img-box">
+                <img id="photo-preview-img" src="" alt="Anteprima">
             </div>
+            <textarea id="photo-caption-input" class="modal-input" rows="3" maxlength="120" placeholder="Scrivi una frase o dedica per Sara... (Opzionale)" oninput="updateCharCount()"></textarea>
+            <div class="char-counter"><span id="char-count">0</span>/120</div>
+            
+            <button class="btn-action" id="publish-btn" onclick="publishPhoto()">PUBBLICA</button>
+            <button class="btn-action btn-cancel" style="margin-top: 8px;" onclick="closeModal('publish-photo-modal')">Annulla</button>
         </div>
     </div>
 
-    <!-- FIREBASE E LOGICA SMART -->
+    <!-- MODALE NUOVA DEDICA TESTUALE -->
+    <div class="modal" id="dedication-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Lascia una Dedica 💌</h3>
+            <textarea id="dedication-text-input" class="modal-input" rows="4" maxlength="250" placeholder="Scrivi il tuo messaggio di auguri per i 18 anni di Sara..."></textarea>
+            <button class="btn-action" onclick="publishDedication()">Invia Dedica</button>
+            <button class="btn-action btn-cancel" style="margin-top: 8px;" onclick="closeModal('dedication-modal')">Annulla</button>
+        </div>
+    </div>
+
+    <!-- MODALE I MIEI POST -->
+    <div class="modal" id="my-posts-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">I Miei Ricordi 👤</h3>
+            <div id="my-posts-list" style="display:flex; flex-direction:column; gap:12px;"></div>
+            <button class="btn-action btn-cancel" style="margin-top: 16px;" onclick="closeModal('my-posts-modal')">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- MODALE AREA SARA ADMIN -->
+    <div class="modal" id="sara-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Area Riservata Sara 👑</h3>
+            
+            <div id="sara-login-box">
+                <p style="color: var(--text-muted); font-size: 14px;">Inserisci il tuo PIN per accedere alle opzioni esclusive.</p>
+                <input type="password" id="sara-pin-input" class="modal-input" placeholder="PIN (default 0000)" maxlength="8">
+                <button class="btn-action" onclick="checkSaraPin()">Accedi</button>
+            </div>
+
+            <div id="sara-panel-box" style="display: none;">
+                <button class="btn-action" style="background:#4A7C59;" onclick="downloadZipAll()">📦 Scarica Tutte le Foto in ZIP</button>
+                
+                <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--border-color);">
+                
+                <h4 style="margin:0 0 8px; color: var(--primary-dark);">Cambia PIN</h4>
+                <input type="password" id="new-pin-input" class="modal-input" placeholder="Nuovo PIN">
+                <button class="btn-action" style="padding:10px; font-size:14px;" onclick="changePin()">Aggiorna PIN</button>
+
+                <h4 style="margin:20px 0 8px; color: var(--primary-dark);">Galleria Completa</h4>
+                <div class="admin-grid" id="sara-gallery-grid"></div>
+            </div>
+
+            <button class="btn-action btn-cancel" style="margin-top: 16px;" onclick="closeModal('sara-modal')">Chiudi</button>
+        </div>
+    </div>
+
+    <!-- LOGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDzsK0ahLujhQfkOZs1AfxArsWOr0_la3o",
@@ -299,148 +540,316 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const CORRECT_PIN = "1818";
-        let cachedPhotos = [];
 
-        // Caricamento feed foto in tempo reale per tutti
-        window.loadPhotos = async function() {
-            const feed = document.getElementById("photo-feed");
-            const loading = document.getElementById("loading");
-            try {
-                const q = query(collection(db, "photos"), orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
-                
-                feed.innerHTML = "";
-                cachedPhotos = [];
+        let currentUser = localStorage.getItem("sara_app_username") || "";
+        let currentSaraPin = localStorage.getItem("sara_app_pin") || "0000";
+        let tempCompressedImage = null;
+        let allPostsCache = [];
+        let activeFilter = 'all';
 
-                if (querySnapshot.empty) {
-                    feed.innerHTML = '<div class="empty-state">Ancora nessuna foto! Rompi il ghiaccio e carica il primo ricordo della festa 💖</div>';
-                    return;
-                }
+        // INIZIALIZZAZIONE
+        window.addEventListener("DOMContentLoaded", () => {
+            loadFeed();
+        });
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    cachedPhotos.push(data.imageUrl);
-                    const card = document.createElement("div");
-                    card.className = "photo-card";
-                    card.innerHTML = `
-                        <img src="${data.imageUrl}" alt="Foto festa" loading="lazy">
-                        <div class="photo-footer">
-                            <span>✨ Ricordo di gruppo</span>
-                            <span>${new Date().toLocaleDateString()}</span>
-                        </div>
-                    `;
-                    feed.appendChild(card);
-                });
-            } catch (err) {
-                console.error("Errore caricamento:", err);
-                if(loading) loading.innerText = "Impossibile caricare le foto. Controlla la connessione.";
+        // GESTIONE UTENTE
+        function ensureUserIdentified() {
+            if (!currentUser) {
+                document.getElementById("name-modal").style.display = "flex";
+                return false;
+            }
+            return true;
+        }
+
+        window.saveUserName = function() {
+            const input = document.getElementById("user-name-input").value.trim();
+            if (input) {
+                currentUser = input;
+                localStorage.setItem("sara_app_username", currentUser);
+                closeModal("name-modal");
             }
         };
 
-        // Funzione magica: comprime l'immagine prima di caricarla per azzerare il peso ed evitare errori
-        window.compressAndUpload = function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        // TAB SWITCH & FAB TOGGLE
+        window.switchTab = function(tab) {
+            document.getElementById("nav-foto").classList.toggle("active", tab === 'foto');
+            document.getElementById("nav-dediche").classList.toggle("active", tab === 'dediche');
 
-            const uploadLabel = document.getElementById("upload-btn-label");
-            uploadLabel.innerText = "Ottimizzazione foto...";
+            const cameraLabel = document.getElementById("camera-label");
+            const galleryLabel = document.getElementById("gallery-label");
+            const dedicationFab = document.getElementById("dedication-fab");
+
+            if (tab === 'foto') {
+                cameraLabel.style.display = 'flex';
+                galleryLabel.style.display = 'flex';
+                dedicationFab.style.display = 'none';
+                setFilter('photos');
+            } else {
+                cameraLabel.style.display = 'none';
+                galleryLabel.style.display = 'none';
+                dedicationFab.style.display = 'flex';
+                setFilter('dedications');
+            }
+        };
+
+        window.setFilter = function(filter) {
+            activeFilter = filter;
+            document.getElementById("f-all").classList.toggle("active", filter === 'all');
+            document.getElementById("f-photos").classList.toggle("active", filter === 'photos');
+            document.getElementById("f-dedications").classList.toggle("active", filter === 'dedications');
+            renderFeed();
+        };
+
+        // CARICAMENTO FEED
+        async function loadFeed() {
+            try {
+                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+                const snapshot = await getDocs(q);
+                allPostsCache = [];
+                snapshot.forEach(d => {
+                    allPostsCache.push({ id: d.id, ...d.data() });
+                });
+                renderFeed();
+            } catch (err) {
+                console.error("Errore feed:", err);
+            }
+        }
+
+        function renderFeed() {
+            const feedContainer = document.getElementById("main-feed");
+            feedContainer.innerHTML = "";
+
+            let filtered = allPostsCache.filter(p => {
+                if (activeFilter === 'photos') return p.type === 'photo';
+                if (activeFilter === 'dedications') return p.type === 'dedication';
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                feedContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 50px 0;">Nessun contenuto ancora. Sii il primo a condividere! ✨</div>';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "post-card";
+
+                const initial = (p.userName || "A").charAt(0).toUpperCase();
+                const timeStr = p.createdAt ? new Date(p.createdAt.seconds * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Adesso';
+
+                let bodyContent = '';
+                if (p.type === 'photo') {
+                    bodyContent = `<img class="post-image" src="${p.imageUrl}" loading="lazy">`;
+                    if (p.text) {
+                        bodyContent += `<div class="post-caption">${p.text}</div>`;
+                    }
+                } else {
+                    bodyContent = `<div class="post-dedication-only">"${p.text}"</div>`;
+                }
+
+                card.innerHTML = `
+                    <div class="post-header">
+                        <div class="user-info">
+                            <div class="avatar">${initial}</div>
+                            <div class="user-details">
+                                <span class="username">${p.userName || 'Invitato'}</span>
+                                <span class="time">${timeStr}</span>
+                            </div>
+                        </div>
+                    </div>
+                    ${bodyContent}
+                `;
+                feedContainer.appendChild(card);
+            });
+        }
+
+        // COMPRESSIONE & CARICAMENTO FOTO
+        window.handleImageSelect = function(e) {
+            if (!ensureUserIdentified()) return;
+            const file = e.target.files[0];
+            if (!file) return;
 
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = function(e) {
+            reader.onload = function(event) {
                 const img = new Image();
-                img.src = e.target.result;
-                img.onload = async function() {
+                img.src = event.target.result;
+                img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 1000;
-                    const MAX_HEIGHT = 1000;
-                    let width = img.width;
-                    let height = img.height;
+                    const MAX = 1000;
+                    let w = img.width, h = img.height;
+                    if (w > h) { if (w > MAX) { h *= MAX/w; w = MAX; } }
+                    else { if (h > MAX) { w *= MAX/h; h = MAX; } }
 
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                    }
-
-                    canvas.width = width;
-                    canvas.height = height;
+                    canvas.width = w; canvas.height = h;
                     const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, w, h);
 
-                    // Comprime al 75% di qualità per renderla leggerissima ma bellissima
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.75);
-
-                    uploadLabel.innerText = "Caricamento in corso...";
-                    try {
-                        await addDoc(collection(db, "photos"), {
-                            imageUrl: compressedDataUrl,
-                            createdAt: new Date()
-                        });
-                        loadPhotos();
-                    } catch (err) {
-                        console.error("Errore salvataggio:", err);
-                        alert("Caricamento non riuscito. Riprova.");
-                    } finally {
-                        uploadLabel.innerHTML = `📷 Scatta o Carica Foto <input type='file' id='file-input' accept='image/*' onchange='compressAndUpload(event)'>`;
-                    }
+                    tempCompressedImage = canvas.toDataURL('image/jpeg', 0.75);
+                    document.getElementById("photo-preview-img").src = tempCompressedImage;
+                    document.getElementById("photo-caption-input").value = "";
+                    document.getElementById("char-count").innerText = "0";
+                    document.getElementById("publish-photo-modal").style.display = "flex";
                 }
-            };
-        };
-
-        // Gestione PIN Sara
-        window.openAdminModal = function() {
-            document.getElementById("admin-modal").style.display = "flex";
-            document.getElementById("admin-pin").value = "";
-            document.getElementById("pin-error").style.display = "none";
-        };
-
-        window.closeAdminModal = function() {
-            document.getElementById("admin-modal").style.display = "none";
-        };
-
-        window.verifyAdminPin = async function() {
-            const enteredPin = document.getElementById("admin-pin").value;
-            if (enteredPin === CORRECT_PIN) {
-                closeAdminModal();
-                alert("PIN corretto! Preparazione dell'archivio ZIP...");
-                await downloadAllAsZip();
-            } else {
-                document.getElementById("pin-error").style.display = "block";
             }
         };
 
-        // Download archivio ZIP
-        async function downloadAllAsZip() {
-            if (cachedPhotos.length === 0) {
+        window.updateCharCount = function() {
+            const txt = document.getElementById("photo-caption-input").value;
+            document.getElementById("char-count").innerText = txt.length;
+        };
+
+        window.publishPhoto = async function() {
+            if (!tempCompressedImage) return;
+            const btn = document.getElementById("publish-btn");
+            btn.innerText = "Invio in corso...";
+            btn.disabled = true;
+
+            const caption = document.getElementById("photo-caption-input").value.trim();
+
+            try {
+                await addDoc(collection(db, "posts"), {
+                    type: "photo",
+                    imageUrl: tempCompressedImage,
+                    text: caption,
+                    userName: currentUser,
+                    createdAt: new Date()
+                });
+                closeModal("publish-photo-modal");
+                loadFeed();
+            } catch (err) {
+                alert("Errore durante la pubblicazione. Riprova.");
+            } finally {
+                btn.innerText = "PUBBLICA";
+                btn.disabled = false;
+                tempCompressedImage = null;
+            }
+        };
+
+        // PUBBLICAZIONE DEDICA
+        window.openDedicationModal = function() {
+            if (!ensureUserIdentified()) return;
+            document.getElementById("dedication-modal").style.display = "flex";
+        };
+
+        window.publishDedication = async function() {
+            const text = document.getElementById("dedication-text-input").value.trim();
+            if (!text) return;
+
+            try {
+                await addDoc(collection(db, "posts"), {
+                    type: "dedication",
+                    text: text,
+                    userName: currentUser,
+                    createdAt: new Date()
+                });
+                document.getElementById("dedication-text-input").value = "";
+                closeModal("dedication-modal");
+                loadFeed();
+            } catch (err) {
+                alert("Errore nell'invio della dedica.");
+            }
+        };
+
+        // I MIEI POST
+        window.openMyPostsModal = function() {
+            if (!ensureUserIdentified()) return;
+            const container = document.getElementById("my-posts-list");
+            container.innerHTML = "";
+
+            const myPosts = allPostsCache.filter(p => p.userName === currentUser);
+
+            if (myPosts.length === 0) {
+                container.innerHTML = '<div style="text-align:center; color:var(--text-muted);">Non hai ancora pubblicato nulla.</div>';
+            } else {
+                myPosts.forEach(p => {
+                    const item = document.createElement("div");
+                    item.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:10px; border:1px solid var(--border-color); border-radius:12px;";
+                    item.innerHTML = `
+                        <div style="font-size:13px; max-width: 200px; overflow:hidden; text-overflow:ellipsis;">
+                            ${p.type === 'photo' ? '📷 Foto' : '💌 Dedica'}: ${p.text || 'Senza testo'}
+                        </div>
+                        <button style="background:#D97777; color:white; border:none; padding:6px 10px; border-radius:8px; font-size:12px; cursor:pointer;" onclick="deleteMyPost('${p.id}')">Elimina</button>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+            document.getElementById("my-posts-modal").style.display = "flex";
+        };
+
+        window.deleteMyPost = async function(id) {
+            if (confirm("Vuoi davvero eliminare questo ricordo?")) {
+                await deleteDoc(doc(db, "posts", id));
+                openMyPostsModal();
+                loadFeed();
+            }
+        };
+
+        // AREA SARA
+        window.openSaraModal = function() {
+            document.getElementById("sara-login-box").style.display = "block";
+            document.getElementById("sara-panel-box").style.display = "none";
+            document.getElementById("sara-pin-input").value = "";
+            document.getElementById("sara-modal").style.display = "flex";
+        };
+
+        window.checkSaraPin = function() {
+            const entered = document.getElementById("sara-pin-input").value;
+            if (entered === currentSaraPin) {
+                document.getElementById("sara-login-box").style.display = "none";
+                document.getElementById("sara-panel-box").style.display = "block";
+                renderSaraGallery();
+            } else {
+                alert("PIN Errato!");
+            }
+        };
+
+        window.changePin = function() {
+            const newPin = document.getElementById("new-pin-input").value.trim();
+            if (newPin) {
+                currentSaraPin = newPin;
+                localStorage.setItem("sara_app_pin", newPin);
+                alert("PIN aggiornato con successo!");
+                document.getElementById("new-pin-input").value = "";
+            }
+        };
+
+        function renderSaraGallery() {
+            const grid = document.getElementById("sara-gallery-grid");
+            grid.innerHTML = "";
+            const photos = allPostsCache.filter(p => p.type === 'photo');
+            photos.forEach(p => {
+                const img = document.createElement("img");
+                img.src = p.imageUrl;
+                grid.appendChild(img);
+            });
+        }
+
+        window.downloadZipAll = async function() {
+            const photos = allPostsCache.filter(p => p.type === 'photo');
+            if (photos.length === 0) {
                 alert("Non ci sono foto da scaricare!");
                 return;
             }
-            const zip = new JSZip();
-            const folder = zip.folder("Compleanno-Sara-Ricordi");
 
-            cachedPhotos.forEach((url, index) => {
-                const base64Data = url.split(',')[1];
-                if (base64Data) {
-                    folder.file(`Sara_18_${index + 1}.jpg`, base64Data, { base64: true });
-                }
+            const zip = new JSZip();
+            const folder = zip.folder("Foto_Sara_18th");
+
+            photos.forEach((p, idx) => {
+                const b64 = p.imageUrl.split(',')[1];
+                if (b64) folder.file(`Foto_${idx + 1}.jpg`, b64, { base64: true });
             });
 
             const content = await zip.generateAsync({ type: "blob" });
             const link = document.createElement("a");
             link.href = URL.createObjectURL(content);
-            link.download = "Compleanno-Sara-Tutte-Le-Foto.zip";
+            link.download = "Festa_Sara_Tutte_Le_Foto.zip";
             link.click();
-        }
+        };
 
-        loadPhotos();
+        window.closeModal = function(id) {
+            document.getElementById(id).style.display = "none";
+        };
     </script>
 </body>
 </html>
