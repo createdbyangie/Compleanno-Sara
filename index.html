@@ -10,10 +10,9 @@
             --card-bg: #FFFFFF;
             --primary: #E89BA7;
             --primary-dark: #D47B89;
-            --text-main: #1A1A1A; /* Nero deciso per alta leggibilità */
-            --text-muted: #666666;
-            --border-dark: #1A1A1A; /* Bordi neri d'impatto */
-            --border-soft: #E0D0D0;
+            --text-main: #1A1A1A;
+            --text-muted: #555555;
+            --border-dark: #1A1A1A;
             --accent-soft: #FFE6E9;
         }
 
@@ -41,14 +40,14 @@
             flex-direction: column;
             position: relative;
             box-shadow: 0 0 30px rgba(0,0,0,0.1);
-            padding-bottom: 95px;
+            padding-bottom: 105px;
         }
 
         /* HEADER */
         header {
-            padding: 18px 20px 14px;
+            padding: 20px 20px 16px;
             background: var(--card-bg);
-            border-bottom: 2px solid var(--border-dark);
+            border-bottom: 3px solid var(--border-dark);
             position: sticky;
             top: 0;
             z-index: 10;
@@ -58,11 +57,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .title-area h1 {
-            font-size: 24px;
+            font-size: 27px;
             margin: 0;
             color: var(--text-main);
             font-weight: 900;
@@ -70,34 +69,34 @@
         }
 
         .title-area span {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--primary-dark);
-            font-weight: 800;
+            font-weight: 900;
             letter-spacing: 0.5px;
         }
 
         .live-counter {
-            font-size: 13px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 900;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 4px;
         }
 
         .header-actions {
             display: flex;
-            gap: 8px;
+            gap: 10px;
         }
 
         .badge-btn {
             background: var(--card-bg);
             color: var(--text-main);
             border: 2px solid var(--border-dark);
-            padding: 8px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 800;
+            padding: 10px 16px;
+            border-radius: 22px;
+            font-size: 15px;
+            font-weight: 900;
             cursor: pointer;
-            box-shadow: 2px 2px 0px var(--border-dark);
+            box-shadow: 3px 3px 0px var(--border-dark);
             transition: transform 0.1s;
         }
 
@@ -109,22 +108,22 @@
         /* FILTRI SUPP. */
         .filter-bar {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 14px;
         }
 
         .filter-btn {
             flex: 1;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 14px;
             border: 2px solid var(--border-dark);
             background: var(--card-bg);
             color: var(--text-main);
-            font-size: 15px;
-            font-weight: 800;
+            font-size: 16px;
+            font-weight: 900;
             cursor: pointer;
             text-align: center;
-            box-shadow: 2px 2px 0px var(--border-dark);
+            box-shadow: 3px 3px 0px var(--border-dark);
         }
 
         .filter-btn.active {
@@ -134,24 +133,24 @@
 
         /* FEED */
         .feed {
-            padding: 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 22px;
+            gap: 24px;
         }
 
         .post-card {
             background: var(--card-bg);
-            border-radius: 20px;
-            border: 2px solid var(--border-dark);
-            box-shadow: 4px 4px 0px var(--border-dark);
+            border-radius: 22px;
+            border: 3px solid var(--border-dark);
+            box-shadow: 5px 5px 0px var(--border-dark);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
 
         .post-header {
-            padding: 14px 16px;
+            padding: 16px 18px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -160,12 +159,12 @@
         .user-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
 
         .avatar {
-            width: 42px;
-            height: 42px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--primary);
             color: white;
@@ -174,70 +173,76 @@
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 18px;
+            font-size: 20px;
         }
 
         .user-details .username {
-            font-weight: 800;
-            font-size: 17px;
+            font-weight: 900;
+            font-size: 19px;
             color: var(--text-main);
             display: block;
         }
 
         .user-details .time {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .post-image {
             width: 100%;
-            max-height: 480px;
+            max-height: 500px;
             object-fit: cover;
             display: block;
             cursor: pointer;
         }
 
         .post-caption {
-            padding: 14px 16px 8px;
-            font-size: 16px;
-            font-weight: 600;
+            padding: 16px 18px 10px;
+            font-size: 18px;
+            font-weight: 800;
             line-height: 1.4;
             color: var(--text-main);
         }
 
         .post-dedication-only {
-            padding: 24px 20px;
-            font-size: 18px;
+            padding: 26px 22px;
+            font-size: 20px;
             line-height: 1.5;
             color: var(--text-main);
             background: var(--accent-soft);
-            border-radius: 14px;
-            margin: 12px 16px 8px;
-            font-weight: 700;
+            border-radius: 16px;
+            margin: 14px 18px 10px;
+            font-weight: 900;
             font-style: italic;
             border: 2px solid var(--border-dark);
         }
 
         .post-footer {
-            padding: 8px 16px 14px;
+            padding: 10px 18px 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .like-btn {
             background: none;
-            border: none;
+            border: 2px solid var(--border-dark);
             font-size: 20px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 800;
+            gap: 8px;
+            font-weight: 900;
             color: var(--text-main);
-            padding: 4px 8px;
-            border-radius: 10px;
+            padding: 8px 14px;
+            border-radius: 14px;
+            background: #FFF;
+            box-shadow: 2px 2px 0px var(--border-dark);
+        }
+        .like-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: none;
         }
 
         /* BARRA BOTTOM */
@@ -246,9 +251,9 @@
             bottom: 0;
             width: 100%;
             max-width: 480px;
-            height: 75px;
+            height: 80px;
             background: var(--card-bg);
-            border-top: 2px solid var(--border-dark);
+            border-top: 3px solid var(--border-dark);
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -263,8 +268,8 @@
             background: none;
             border: none;
             color: var(--text-muted);
-            font-size: 14px;
-            font-weight: 800;
+            font-size: 15px;
+            font-weight: 900;
             cursor: pointer;
             flex: 1;
         }
@@ -274,15 +279,15 @@
         }
 
         .nav-item svg {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             fill: currentColor;
         }
 
         /* FAB PULSANTI AZIONE */
         .fab-group {
             position: fixed;
-            bottom: 90px;
+            bottom: 95px;
             right: 20px;
             display: flex;
             align-items: flex-end;
@@ -291,33 +296,33 @@
         }
 
         .fab-small {
-            width: 52px;
-            height: 52px;
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
             background: white;
-            border: 2px solid var(--border-dark);
+            border: 3px solid var(--border-dark);
             color: var(--text-main);
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 3px 3px 0px var(--border-dark);
-        }
-
-        .fab-main {
-            width: 68px;
-            height: 68px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            font-size: 28px;
-            border: 2px solid var(--border-dark);
+            font-size: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: 4px 4px 0px var(--border-dark);
+        }
+
+        .fab-main {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            font-size: 32px;
+            border: 3px solid var(--border-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 5px 5px 0px var(--border-dark);
             transition: transform 0.15s ease;
         }
 
@@ -331,7 +336,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             backdrop-filter: blur(4px);
             z-index: 100;
             justify-content: center;
@@ -340,32 +345,32 @@
 
         .modal-content {
             background: var(--card-bg);
-            width: 90%;
-            max-width: 420px;
-            border-radius: 24px;
-            padding: 24px;
+            width: 92%;
+            max-width: 430px;
+            border-radius: 26px;
+            padding: 26px;
             max-height: 85vh;
             overflow-y: auto;
-            border: 2px solid var(--border-dark);
-            box-shadow: 6px 6px 0px var(--border-dark);
+            border: 3px solid var(--border-dark);
+            box-shadow: 7px 7px 0px var(--border-dark);
         }
 
         .modal-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--text-main);
             margin-top: 0;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .modal-input {
             width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: 2px solid var(--border-dark);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
+            padding: 18px;
+            border-radius: 16px;
+            border: 3px solid var(--border-dark);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 14px;
             background: var(--bg-color);
             outline: none;
             color: var(--text-main);
@@ -373,11 +378,11 @@
 
         .preview-img-box {
             width: 100%;
-            max-height: 260px;
+            max-height: 280px;
             border-radius: 16px;
             overflow: hidden;
-            margin-bottom: 12px;
-            border: 2px solid var(--border-dark);
+            margin-bottom: 14px;
+            border: 3px solid var(--border-dark);
         }
 
         .preview-img-box img {
@@ -387,25 +392,29 @@
         }
 
         .char-counter {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
             color: var(--text-muted);
             text-align: right;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .btn-action {
             width: 100%;
-            padding: 16px;
-            border-radius: 14px;
-            border: 2px solid var(--border-dark);
+            padding: 18px;
+            border-radius: 16px;
+            border: 3px solid var(--border-dark);
             background: var(--primary);
             color: white;
-            font-size: 17px;
+            font-size: 19px;
             font-weight: 900;
             cursor: pointer;
             margin-top: 8px;
-            box-shadow: 3px 3px 0px var(--border-dark);
+            box-shadow: 4px 4px 0px var(--border-dark);
+        }
+        .btn-action:active {
+            transform: translate(2px, 2px);
+            box-shadow: none;
         }
 
         .btn-cancel {
@@ -415,22 +424,22 @@
 
         /* LIGHTBOX SCHERMO INTERO */
         #lightbox-modal {
-            background: rgba(0,0,0,0.92);
+            background: rgba(0,0,0,0.95);
         }
 
         #lightbox-modal img {
             max-width: 95vw;
             max-height: 80vh;
-            border-radius: 16px;
+            border-radius: 18px;
             object-fit: contain;
-            border: 2px solid white;
+            border: 3px solid white;
         }
 
         /* SARA ADMIN GRID & DEDICHE */
         .admin-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 10px;
             margin-top: 15px;
         }
 
@@ -438,18 +447,18 @@
             width: 100%;
             aspect-ratio: 1;
             object-fit: cover;
-            border-radius: 10px;
-            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            border: 2px solid var(--border-dark);
         }
 
         .sara-dedication-card {
             background: var(--accent-soft);
             border: 2px solid var(--border-dark);
-            padding: 12px 14px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 8px;
+            padding: 14px 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
         input[type="file"] { display: none; }
@@ -484,7 +493,7 @@
 
         <!-- FEED PRINCIPALE -->
         <div class="feed" id="main-feed">
-            <div style="text-align: center; color: var(--text-muted); font-weight:700; padding: 40px 0;">Caricamento bacheca... ✨</div>
+            <div style="text-align: center; color: var(--text-muted); font-weight:800; font-size: 17px; padding: 40px 0;">Caricamento bacheca... ✨</div>
         </div>
 
         <!-- FAB BOTTONI D'AZIONE -->
@@ -521,7 +530,7 @@
     <div class="modal" id="name-modal">
         <div class="modal-content">
             <h3 class="modal-title">Come ti chiami? ✨</h3>
-            <p style="color: var(--text-muted); font-size: 15px; font-weight:700; margin-bottom: 16px;">Inserisci il tuo nome per firmare le tue foto e le tue dediche per Sara.</p>
+            <p style="color: var(--text-muted); font-size: 17px; font-weight:800; margin-bottom: 16px;">Inserisci il tuo nome per firmare le tue foto e le tue dediche per Sara.</p>
             <input type="text" id="user-name-input" class="modal-input" placeholder="Il tuo nome (es. Chiara)">
             <button class="btn-action" onclick="saveUserName()">Salva e Continua</button>
         </div>
@@ -538,7 +547,7 @@
             <div class="char-counter"><span id="char-count">0</span>/120</div>
             
             <button class="btn-action" id="publish-btn" onclick="publishPhoto()">PUBBLICA</button>
-            <button class="btn-action btn-cancel" style="margin-top: 8px;" onclick="closeModal('publish-photo-modal')">Annulla</button>
+            <button class="btn-action btn-cancel" style="margin-top: 10px;" onclick="closeModal('publish-photo-modal')">Annulla</button>
         </div>
     </div>
 
@@ -548,7 +557,7 @@
             <h3 class="modal-title">Lascia una Dedica 💌</h3>
             <textarea id="dedication-text-input" class="modal-input" rows="4" maxlength="250" placeholder="Scrivi il tuo messaggio di auguri per i 18 anni di Sara..."></textarea>
             <button class="btn-action" onclick="publishDedication()">Invia Dedica</button>
-            <button class="btn-action btn-cancel" style="margin-top: 8px;" onclick="closeModal('dedication-modal')">Annulla</button>
+            <button class="btn-action btn-cancel" style="margin-top: 10px;" onclick="closeModal('dedication-modal')">Annulla</button>
         </div>
     </div>
 
@@ -556,8 +565,8 @@
     <div class="modal" id="my-posts-modal">
         <div class="modal-content">
             <h3 class="modal-title">I Miei Ricordi 👤</h3>
-            <div id="my-posts-list" style="display:flex; flex-direction:column; gap:12px;"></div>
-            <button class="btn-action btn-cancel" style="margin-top: 16px;" onclick="closeModal('my-posts-modal')">Chiudi</button>
+            <div id="my-posts-list" style="display:flex; flex-direction:column; gap:14px;"></div>
+            <button class="btn-action btn-cancel" style="margin-top: 18px;" onclick="closeModal('my-posts-modal')">Chiudi</button>
         </div>
     </div>
 
@@ -567,7 +576,7 @@
             <h3 class="modal-title">Area Riservata Sara 👑</h3>
             
             <div id="sara-login-box">
-                <p style="color: var(--text-muted); font-size: 15px; font-weight: 700;">Inserisci il tuo PIN per accedere alle opzioni esclusive.</p>
+                <p style="color: var(--text-muted); font-size: 17px; font-weight: 800;">Inserisci il tuo PIN per accedere alle opzioni esclusive.</p>
                 <input type="password" id="sara-pin-input" class="modal-input" placeholder="PIN (default 0000)" maxlength="8">
                 <button class="btn-action" onclick="checkSaraPin()">Accedi</button>
             </div>
@@ -575,30 +584,30 @@
             <div id="sara-panel-box" style="display: none;">
                 <button class="btn-action" style="background:#4A7C59;" onclick="downloadZipAll()">📦 Scarica Tutte le Foto in ZIP</button>
                 
-                <hr style="margin: 20px 0; border: none; border-top: 2px solid var(--border-dark);">
+                <hr style="margin: 22px 0; border: none; border-top: 3px solid var(--border-dark);">
                 
-                <h4 style="margin:0 0 8px; font-size: 18px; color: var(--text-main);">Tutte le Dediche Ricevute 💌</h4>
-                <div id="sara-dedications-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 20px;"></div>
+                <h4 style="margin:0 0 10px; font-size: 20px; font-weight:900; color: var(--text-main);">Tutte le Dediche Ricevute 💌</h4>
+                <div id="sara-dedications-list" style="max-height: 220px; overflow-y: auto; margin-bottom: 20px;"></div>
 
-                <hr style="margin: 20px 0; border: none; border-top: 2px solid var(--border-dark);">
+                <hr style="margin: 22px 0; border: none; border-top: 3px solid var(--border-dark);">
 
-                <h4 style="margin:0 0 8px; font-size: 18px; color: var(--text-main);">Cambia PIN</h4>
+                <h4 style="margin:0 0 10px; font-size: 20px; font-weight:900; color: var(--text-main);">Cambia PIN</h4>
                 <input type="password" id="new-pin-input" class="modal-input" placeholder="Nuovo PIN">
-                <button class="btn-action" style="padding:12px; font-size:15px;" onclick="changePin()">Aggiorna PIN</button>
+                <button class="btn-action" style="padding:14px; font-size:17px;" onclick="changePin()">Aggiorna PIN</button>
 
-                <h4 style="margin:20px 0 8px; font-size: 18px; color: var(--text-main);">Galleria Foto Completa</h4>
+                <h4 style="margin:22px 0 10px; font-size: 20px; font-weight:900; color: var(--text-main);">Galleria Foto Completa</h4>
                 <div class="admin-grid" id="sara-gallery-grid"></div>
             </div>
 
-            <button class="btn-action btn-cancel" style="margin-top: 16px;" onclick="closeModal('sara-modal')">Chiudi</button>
+            <button class="btn-action btn-cancel" style="margin-top: 18px;" onclick="closeModal('sara-modal')">Chiudi</button>
         </div>
     </div>
 
     <!-- MODALE LIGHTBOX FOTO FULLSCREEN -->
     <div class="modal" id="lightbox-modal" onclick="closeModal('lightbox-modal')">
-        <div style="display:flex; flex-direction:column; align-items:center; gap:12px;">
+        <div style="display:flex; flex-direction:column; align-items:center; gap:14px;">
             <img id="lightbox-img" src="" alt="Foto Schermo Intero">
-            <div id="lightbox-caption" style="color:white; font-size:16px; font-weight:700; text-align:center;"></div>
+            <div id="lightbox-caption" style="color:white; font-size:18px; font-weight:900; text-align:center; padding: 0 15px;"></div>
         </div>
     </div>
 
@@ -703,7 +712,7 @@
             });
 
             if (filtered.length === 0) {
-                feedContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-weight:700; padding: 50px 0;">Nessun contenuto ancora. Sii il primo a condividere! ✨</div>';
+                feedContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); font-weight:800; font-size: 17px; padding: 50px 0;">Nessun contenuto ancora. Sii il primo a condividere! ✨</div>';
                 return;
             }
 
@@ -717,7 +726,7 @@
 
                 let bodyContent = '';
                 if (p.type === 'photo') {
-                    bodyContent = `<img class="post-image" src="${p.imageUrl}" loading="lazy" onclick="openLightbox('${p.imageUrl}', '${p.text || ''}')">`;
+                    bodyContent = `<img class="post-image" src="${p.imageUrl}" loading="lazy" onclick="openLightbox('${p.imageUrl}', '${(p.text || '').replace(/'/g, "\\'")}')">`;
                     if (p.text) {
                         bodyContent += `<div class="post-caption">${p.text}</div>`;
                     }
@@ -744,10 +753,21 @@
             });
         }
 
+        // LIMITE 1 LIKE PER UTENTE PER POST
         window.likePost = async function(id) {
+            let likedPosts = JSON.parse(localStorage.getItem("sara_liked_posts") || "[]");
+            if (likedPosts.includes(id)) {
+                alert("Hai già messo un Mi Piace a questo post! ❤️");
+                return;
+            }
+
             try {
                 const postRef = doc(db, "posts", id);
                 await updateDoc(postRef, { likes: increment(1) });
+                
+                likedPosts.push(id);
+                localStorage.setItem("sara_liked_posts", JSON.stringify(likedPosts));
+
                 const postObj = allPostsCache.find(p => p.id === id);
                 if(postObj) postObj.likes = (postObj.likes || 0) + 1;
                 renderFeed();
@@ -852,34 +872,44 @@
 
         window.openMyPostsModal = function() {
             if (!ensureUserIdentified()) return;
+            renderMyPostsList();
+            document.getElementById("my-posts-modal").style.display = "flex";
+        };
+
+        function renderMyPostsList() {
             const container = document.getElementById("my-posts-list");
             container.innerHTML = "";
 
             const myPosts = allPostsCache.filter(p => p.userName === currentUser);
 
             if (myPosts.length === 0) {
-                container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-weight:700;">Non hai ancora pubblicato nulla.</div>';
+                container.innerHTML = '<div style="text-align:center; color:var(--text-muted); font-weight:800; font-size:16px;">Non hai ancora pubblicato nulla.</div>';
             } else {
                 myPosts.forEach(p => {
                     const item = document.createElement("div");
-                    item.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:12px; border:2px solid var(--border-dark); border-radius:12px;";
+                    item.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:14px; border:2px solid var(--border-dark); border-radius:14px; background:#FFF; box-shadow: 2px 2px 0px var(--border-dark);";
                     item.innerHTML = `
-                        <div style="font-size:14px; font-weight:700; max-width: 200px; overflow:hidden; text-overflow:ellipsis;">
+                        <div style="font-size:15px; font-weight:800; max-width: 210px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
                             ${p.type === 'photo' ? '📷 Foto' : '💌 Dedica'}: ${p.text || 'Senza testo'}
                         </div>
-                        <button style="background:#1A1A1A; color:white; border:none; padding:8px 12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;" onclick="deleteMyPost('${p.id}')">Elimina</button>
+                        <button style="background:#1A1A1A; color:white; border:none; padding:10px 14px; border-radius:10px; font-size:14px; font-weight:900; cursor:pointer;" onclick="deleteMyPost('${p.id}')">Elimina</button>
                     `;
                     container.appendChild(item);
                 });
             }
-            document.getElementById("my-posts-modal").style.display = "flex";
-        };
+        }
 
         window.deleteMyPost = async function(id) {
             if (confirm("Vuoi davvero eliminare questo ricordo?")) {
-                await deleteDoc(doc(db, "posts", id));
-                openMyPostsModal();
-                loadFeed();
+                try {
+                    await deleteDoc(doc(db, "posts", id));
+                    // Aggiorna subito la cache e rinfresca sia il feed che la lista modale all'istante
+                    allPostsCache = allPostsCache.filter(p => p.id !== id);
+                    renderFeed();
+                    renderMyPostsList();
+                } catch(e) {
+                    alert("Errore durante l'eliminazione.");
+                }
             }
         };
 
@@ -912,7 +942,6 @@
         };
 
         function renderSaraContent() {
-            // Render Gallerie Foto
             const grid = document.getElementById("sara-gallery-grid");
             grid.innerHTML = "";
             const photos = allPostsCache.filter(p => p.type === 'photo');
@@ -922,13 +951,12 @@
                 grid.appendChild(img);
             });
 
-            // Render Elenco Dediche
             const dedList = document.getElementById("sara-dedications-list");
             dedList.innerHTML = "";
             const dedications = allPostsCache.filter(p => p.type === 'dedication' || (p.type === 'photo' && p.text));
             
             if (dedications.length === 0) {
-                dedList.innerHTML = '<div style="color:var(--text-muted); font-size:14px;">Nessuna dedica scritta finora.</div>';
+                dedList.innerHTML = '<div style="color:var(--text-muted); font-size:15px; font-weight:800;">Nessuna dedica scritta finora.</div>';
             } else {
                 dedications.forEach(d => {
                     const box = document.createElement("div");
