@@ -649,7 +649,7 @@
     <!-- LOGICA E FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc, increment, query, orderBy } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, increment, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDzsK0ahLujhQfkOZs1AfxArsWOr0_la3o",
@@ -672,9 +672,42 @@
         let deferredPrompt = null;
 
         window.addEventListener("DOMContentLoaded", () => {
-            loadFeed();
+            initRealtimeFeed();
             checkWelcomeModal();
         });
+
+        // ASCOLTO IN TEMPO REALE CON ONSNAPSHOT
+        function initRealtimeFeed() {
+            try {
+                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
+                onSnapshot(q, (snapshot) => {
+                    allPostsCache = [];
+                    snapshot.forEach(d => {
+                        allPostsCache.push({ id: d.id, ...d.data() });
+                    });
+                    
+                    document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
+                    updateUniqueUsersCount();
+                    renderFeed();
+
+                    // Se l'area Sara è aperta, aggiorna i contenuti in tempo reale
+                    const saraPanel = document.getElementById("sara-panel-box");
+                    if (saraPanel && saraPanel.style.display === "block") {
+                        renderSaraContent();
+                    }
+                    
+                    // Se la modale "I miei post" è aperta, aggiornala
+                    const myPostsModal = document.getElementById("my-posts-modal");
+                    if (myPostsModal && myPostsModal.style.display === "flex") {
+                        renderMyPostsList();
+                    }
+                }, (err) => {
+                    console.error("Errore feed real-time:", err);
+                });
+            } catch (err) {
+                console.error("Errore inizializzazione feed:", err);
+            }
+        }
 
         function checkWelcomeModal() {
             const hasSeenWelcome = localStorage.getItem("sara_welcomed");
@@ -687,7 +720,6 @@
                 }
                 document.getElementById("welcome-modal").style.display = "flex";
             } else {
-                // Se ha già visto il benvenuto ma non ha ancora inserito il nome, chiediamoglielo subito
                 if (!currentUser) {
                     document.getElementById("name-modal").style.display = "flex";
                 }
@@ -710,7 +742,6 @@
         window.closeWelcomeModal = function() {
             localStorage.setItem("sara_welcomed", "true");
             document.getElementById("welcome-modal").style.display = "none";
-            // Subito dopo il benvenuto, chiediamo il nome se manca
             if (!currentUser) {
                 document.getElementById("name-modal").style.display = "flex";
             }
@@ -762,23 +793,6 @@
             document.getElementById("f-dedications").classList.toggle("active", filter === 'dedications');
             renderFeed();
         };
-
-        async function loadFeed() {
-            try {
-                const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-                const snapshot = await getDocs(q);
-                allPostsCache = [];
-                snapshot.forEach(d => {
-                    allPostsCache.push({ id: d.id, ...d.data() });
-                });
-                
-                document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
-                updateUniqueUsersCount();
-                renderFeed();
-            } catch (err) {
-                console.error("Errore feed:", err);
-            }
-        }
 
         function updateUniqueUsersCount() {
             const uniqueUsers = new Set(allPostsCache.map(p => p.userName).filter(Boolean));
@@ -853,10 +867,6 @@
                 
                 likedPosts.push(id);
                 localStorage.setItem("sara_liked_posts", JSON.stringify(likedPosts));
-
-                const postObj = allPostsCache.find(p => p.id === id);
-                if(postObj) postObj.likes = (postObj.likes || 0) + 1;
-                renderFeed();
             } catch(e) {
                 console.error("Errore like:", e);
             }
@@ -921,7 +931,6 @@
                     createdAt: new Date()
                 });
                 closeModal("publish-photo-modal");
-                loadFeed();
             } catch (err) {
                 alert("Errore durante la pubblicazione. Riprova.");
             } finally {
@@ -950,7 +959,6 @@
                 });
                 document.getElementById("dedication-text-input").value = "";
                 closeModal("dedication-modal");
-                loadFeed();
             } catch (err) {
                 alert("Errore nell'invio della dedica.");
             }
@@ -989,11 +997,6 @@
             if (confirm("Vuoi davvero eliminare questo ricordo?")) {
                 try {
                     await deleteDoc(doc(db, "posts", id));
-                    allPostsCache = allPostsCache.filter(p => p.id !== id);
-                    document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
-                    updateUniqueUsersCount();
-                    renderFeed();
-                    renderMyPostsList();
                 } catch(e) {
                     alert("Errore durante l'eliminazione.");
                 }
@@ -1029,7 +1032,6 @@
         };
 
         function renderSaraContent() {
-            // Render Gallerie Foto con tasto Elimina per Sara
             const grid = document.getElementById("sara-gallery-grid");
             grid.innerHTML = "";
             const photos = allPostsCache.filter(p => p.type === 'photo');
@@ -1048,7 +1050,6 @@
                 });
             }
 
-            // Render Elenco Dediche
             const dedList = document.getElementById("sara-dedications-list");
             dedList.innerHTML = "";
             const dedications = allPostsCache.filter(p => p.type === 'dedication' || (p.type === 'photo' && p.text));
@@ -1069,11 +1070,6 @@
             if (confirm("Sei sicura di voler eliminare questa foto? Verrà rimossa per tutti!")) {
                 try {
                     await deleteDoc(doc(db, "posts", id));
-                    allPostsCache = allPostsCache.filter(p => p.id !== id);
-                    document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
-                    updateUniqueUsersCount();
-                    renderFeed();
-                    renderSaraContent();
                 } catch(e) {
                     alert("Errore durante l'eliminazione della foto.");
                 }
