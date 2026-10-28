@@ -57,7 +57,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .title-area h1 {
@@ -75,11 +75,13 @@
             letter-spacing: 0.5px;
         }
 
-        .live-counter {
+        .counters-row {
+            display: flex;
+            gap: 12px;
             font-size: 15px;
             font-weight: 900;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
         .header-actions {
@@ -481,7 +483,11 @@
                 </div>
             </div>
             
-            <div class="live-counter" id="live-counter-text">✨ 0 Ricordi caricati</div>
+            <div class="counters-row">
+                <span id="live-counter-text">✨ 0 Ricordi</span>
+                <span>•</span>
+                <span id="users-counter-text">👥 0 utenti</span>
+            </div>
 
             <!-- FILTRI SUPP. -->
             <div class="filter-bar">
@@ -523,6 +529,27 @@
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                 Dediche
             </button>
+        </div>
+    </div>
+
+    <!-- MODALE BENVENUTO / INSTALLAZIONE QR CODE -->
+    <div class="modal" id="welcome-modal" style="display: none;">
+        <div class="modal-content" style="text-align: center;">
+            <h3 class="modal-title" style="font-size: 26px;">Benvenuti alla Festa! 🎉</h3>
+            <p style="color: var(--text-muted); font-size: 16px; font-weight: 800; line-height: 1.5; margin-bottom: 20px;">
+                Salva subito l'app sulla tua schermata Home per averla a portata di mano durante la festa di Sara! 🥂
+            </p>
+            
+            <div id="ios-install-guide" style="background: var(--accent-soft); border: 2px solid var(--border-dark); padding: 16px; border-radius: 16px; margin-bottom: 20px; text-align: left; display: none;">
+                <p style="margin: 0 0 8px; font-weight: 900; font-size: 16px;">📱 Per iPhone (Safari):</p>
+                <p style="margin: 0; font-size: 15px; font-weight: 800; line-height: 1.4;">
+                    1. Tocca il tasto <strong>Condividi</strong> ⎋ in basso al browser.<br>
+                    2. Scorri e seleziona <strong>"Aggiungi alla schermata Home"</strong> ➕.
+                </p>
+            </div>
+
+            <button class="btn-action" id="android-install-btn" style="display: none; background: #4A7C59; margin-bottom: 12px;">📥 Installa App sulla Home</button>
+            <button class="btn-action" onclick="closeWelcomeModal()">✨ Continua alla Festa</button>
         </div>
     </div>
 
@@ -634,10 +661,44 @@
         let tempCompressedImage = null;
         let allPostsCache = [];
         let activeFilter = 'all';
+        let deferredPrompt = null;
 
         window.addEventListener("DOMContentLoaded", () => {
             loadFeed();
+            checkWelcomeModal();
         });
+
+        // GESTIONE SCHERMATA BENVENUTO QR CODE & INSTALLAZIONE
+        function checkWelcomeModal() {
+            const hasSeenWelcome = localStorage.getItem("sara_welcomed");
+            if (!hasSeenWelcome) {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                const isIos = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+                if (isIos) {
+                    document.getElementById("ios-install-guide").style.display = "block";
+                }
+                document.getElementById("welcome-modal").style.display = "flex";
+            }
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById("android-install-btn");
+            installBtn.style.display = "block";
+            installBtn.onclick = async () => {
+                installBtn.style.display = 'none';
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+            };
+        });
+
+        window.closeWelcomeModal = function() {
+            localStorage.setItem("sara_welcomed", "true");
+            document.getElementById("welcome-modal").style.display = "none";
+        };
 
         function ensureUserIdentified() {
             if (!currentUser) {
@@ -653,6 +714,7 @@
                 currentUser = input;
                 localStorage.setItem("sara_app_username", currentUser);
                 closeModal("name-modal");
+                updateUniqueUsersCount();
             }
         };
 
@@ -694,11 +756,20 @@
                     allPostsCache.push({ id: d.id, ...d.data() });
                 });
                 
-                document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi caricati`;
+                document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
+                updateUniqueUsersCount();
                 renderFeed();
             } catch (err) {
                 console.error("Errore feed:", err);
             }
+        }
+
+        function updateUniqueUsersCount() {
+            const uniqueUsers = new Set(allPostsCache.map(p => p.userName).filter(Boolean));
+            if (currentUser && !uniqueUsers.has(currentUser)) {
+                uniqueUsers.add(currentUser);
+            }
+            document.getElementById("users-counter-text").innerText = `👥 ${uniqueUsers.size} utenti`;
         }
 
         function renderFeed() {
@@ -903,8 +974,9 @@
             if (confirm("Vuoi davvero eliminare questo ricordo?")) {
                 try {
                     await deleteDoc(doc(db, "posts", id));
-                    // Aggiorna subito la cache e rinfresca sia il feed che la lista modale all'istante
                     allPostsCache = allPostsCache.filter(p => p.id !== id);
+                    document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
+                    updateUniqueUsersCount();
                     renderFeed();
                     renderMyPostsList();
                 } catch(e) {
