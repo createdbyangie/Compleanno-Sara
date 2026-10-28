@@ -440,17 +440,25 @@
         /* SARA ADMIN GRID & DEDICHE */
         .admin-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin-top: 15px;
         }
 
-        .admin-grid img {
+        .admin-photo-card {
+            background: #FFF;
+            border: 2px solid var(--border-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 2px 0px var(--border-dark);
+        }
+
+        .admin-photo-card img {
             width: 100%;
             aspect-ratio: 1;
             object-fit: cover;
-            border-radius: 12px;
-            border: 2px solid var(--border-dark);
         }
 
         .sara-dedication-card {
@@ -504,12 +512,12 @@
 
         <!-- FAB BOTTONI D'AZIONE -->
         <div class="fab-group">
-            <label class="fab-small" id="gallery-label" title="Carica da galleria">
+            <label class="fab-small" id="gallery-label" title="Carica da galleria" onclick="return ensureUserIdentified();">
                 📁
                 <input type="file" id="gallery-input" accept="image/*" onchange="handleImageSelect(event)">
             </label>
 
-            <label class="fab-main" id="camera-label" title="Scatta foto">
+            <label class="fab-main" id="camera-label" title="Scatta foto" onclick="return ensureUserIdentified();">
                 📷
                 <input type="file" id="camera-input" accept="image/*" capture="environment" onchange="handleImageSelect(event)">
             </label>
@@ -622,7 +630,7 @@
                 <input type="password" id="new-pin-input" class="modal-input" placeholder="Nuovo PIN">
                 <button class="btn-action" style="padding:14px; font-size:17px;" onclick="changePin()">Aggiorna PIN</button>
 
-                <h4 style="margin:22px 0 10px; font-size: 20px; font-weight:900; color: var(--text-main);">Galleria Foto Completa</h4>
+                <h4 style="margin:22px 0 10px; font-size: 20px; font-weight:900; color: var(--text-main);">Galleria Foto Completa (Con Elimina)</h4>
                 <div class="admin-grid" id="sara-gallery-grid"></div>
             </div>
 
@@ -668,7 +676,6 @@
             checkWelcomeModal();
         });
 
-        // GESTIONE SCHERMATA BENVENUTO QR CODE & INSTALLAZIONE
         function checkWelcomeModal() {
             const hasSeenWelcome = localStorage.getItem("sara_welcomed");
             if (!hasSeenWelcome) {
@@ -679,6 +686,11 @@
                     document.getElementById("ios-install-guide").style.display = "block";
                 }
                 document.getElementById("welcome-modal").style.display = "flex";
+            } else {
+                // Se ha già visto il benvenuto ma non ha ancora inserito il nome, chiediamoglielo subito
+                if (!currentUser) {
+                    document.getElementById("name-modal").style.display = "flex";
+                }
             }
         }
 
@@ -698,9 +710,13 @@
         window.closeWelcomeModal = function() {
             localStorage.setItem("sara_welcomed", "true");
             document.getElementById("welcome-modal").style.display = "none";
+            // Subito dopo il benvenuto, chiediamo il nome se manca
+            if (!currentUser) {
+                document.getElementById("name-modal").style.display = "flex";
+            }
         };
 
-        function ensureUserIdentified() {
+        window.ensureUserIdentified = function() {
             if (!currentUser) {
                 document.getElementById("name-modal").style.display = "flex";
                 return false;
@@ -824,7 +840,6 @@
             });
         }
 
-        // LIMITE 1 LIKE PER UTENTE PER POST
         window.likePost = async function(id) {
             let likedPosts = JSON.parse(localStorage.getItem("sara_liked_posts") || "[]");
             if (likedPosts.includes(id)) {
@@ -1014,15 +1029,26 @@
         };
 
         function renderSaraContent() {
+            // Render Gallerie Foto con tasto Elimina per Sara
             const grid = document.getElementById("sara-gallery-grid");
             grid.innerHTML = "";
             const photos = allPostsCache.filter(p => p.type === 'photo');
-            photos.forEach(p => {
-                const img = document.createElement("img");
-                img.src = p.imageUrl;
-                grid.appendChild(img);
-            });
 
+            if (photos.length === 0) {
+                grid.innerHTML = '<div style="grid-column: span 2; color:var(--text-muted); font-size:15px; font-weight:800;">Nessuna foto caricata finora.</div>';
+            } else {
+                photos.forEach(p => {
+                    const card = document.createElement("div");
+                    card.className = "admin-photo-card";
+                    card.innerHTML = `
+                        <img src="${p.imageUrl}">
+                        <button style="background:#D97777; color:white; border:none; padding:10px; font-weight:900; font-size:14px; cursor:pointer;" onclick="saraDeletePost('${p.id}')">Elimina Foto 🗑️</button>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+
+            // Render Elenco Dediche
             const dedList = document.getElementById("sara-dedications-list");
             dedList.innerHTML = "";
             const dedications = allPostsCache.filter(p => p.type === 'dedication' || (p.type === 'photo' && p.text));
@@ -1038,6 +1064,21 @@
                 });
             }
         }
+
+        window.saraDeletePost = async function(id) {
+            if (confirm("Sei sicura di voler eliminare questa foto? Verrà rimossa per tutti!")) {
+                try {
+                    await deleteDoc(doc(db, "posts", id));
+                    allPostsCache = allPostsCache.filter(p => p.id !== id);
+                    document.getElementById("live-counter-text").innerText = `✨ ${allPostsCache.length} Ricordi`;
+                    updateUniqueUsersCount();
+                    renderFeed();
+                    renderSaraContent();
+                } catch(e) {
+                    alert("Errore durante l'eliminazione della foto.");
+                }
+            }
+        };
 
         window.downloadZipAll = async function() {
             const photos = allPostsCache.filter(p => p.type === 'photo');
